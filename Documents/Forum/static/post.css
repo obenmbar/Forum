@@ -1,0 +1,220 @@
+/* CSS pour le formulaire de création de post
+  Inspiré par l'image fournie.
+*/
+
+/* --- Configuration Globale --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0a0a0b; /* Fond noir/très sombre */
+    color: #000000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem; /* Espace pour ne pas coller aux bords */
+}
+
+/* --- Le Conteneur Principal du Formulaire --- */
+.post-form {
+    background-color: #ffffff; /* Couleur du conteneur sombre */
+    border-radius: 16px;
+    padding: 2.5rem;
+    max-width: 800px;
+    width: 100%;
+    
+    /* L'effet de lueur bleu néon */
+    box-shadow: 0 0 25px 5px rgba(29, 113, 252, 0.4);
+    border: 1px solid rgba(29, 113, 252, 0.5); /* Bordure subtile pour accentuer */
+
+    /* --- MISE EN PAGE GRID --- */
+    display: grid;
+    /* Colonne de gauche (main) 2x plus large que celle de droite (aside) */
+    grid-template-columns: 2fr 1fr; 
+    grid-template-areas:
+        "header header"  /* L'en-tête prend toute la largeur */
+        "main aside"     /* Main à gauche, aside à droite */
+        "footer footer"; /* Le pied de page prend toute la largeur */
+    gap: 2rem; /* Espace entre les zones */
+}
+
+/* --- En-tête (Header) --- */
+.post-form header {
+    grid-area: header;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.post-form header .header {
+    color: #000000;
+    /* Correspond à l'image (majuscules) */
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+}
+
+/* --- Contenu Principal (Colonne de Gauche) --- */
+.post-form main.input {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espace entre "Title" et "Contenue" */
+}
+
+/* --- Barre Latérale (Colonne de Droite) --- */
+.post-form aside {
+    grid-area: aside;
+    padding-left: 2rem;
+    /* Ligne de séparation subtile */
+    border-left: 1px solid #444; 
+}
+
+.post-form aside p {
+    font-weight: 700;
+    color: #020202;
+    margin-bottom: 1rem;
+    /* Correspond à l'image (Catégtory) */
+    text-transform: uppercase;
+}
+
+/* Style pour chaque groupe de case à cocher */
+.check-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem; /* Espace entre chaque option */
+}
+
+.post-form aside input[type="checkbox"] {
+    /* Style la case à cocher */
+    accent-color: #1d71fc; /* Coche bleue */
+    width: 16px;
+    height: 16px;
+    margin-right: 0.75rem;
+}
+
+.post-form aside label {
+    color: #000000;
+    /* Correspond à l'image (majuscules) */
+    text-transform: uppercase; 
+    font-size: 0.9rem;
+}
+
+/* --- Pied de Page (Footer) --- */
+.post-form footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap; /* Permet au message d'erreur de passer à la ligne */
+    padding-top: 1rem;
+    border-top: 1px solid #444; /* Ligne de séparation */
+}
+
+/* --- Champs de Saisie (Inputs) --- */
+.post-form label {
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 0.5rem;
+}
+
+/* Style commun pour input[text] et textarea */
+.post-form .text {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #ffffff; /* Fond blanc comme sur l'image */
+    border: none;
+    border-radius: 8px;
+    color: #111; /* Texte foncé */
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+.post-form .text::placeholder {
+    color: #888;
+}
+
+.post-form textarea.text {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* --- Boutons --- */
+/* Style de base partagé par les deux boutons */
+.post-form #submit,
+.post-form .cancel-link span {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px; /* Forme de pilule */
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Bouton "Publier" (Submit) */
+.post-form #submit {
+    background-color: #1d71fc; /* Bleu */
+    color: rgb(255, 255, 255);
+}
+
+.post-form #submit:hover {
+    background-color: #0056d9; /* Bleu plus foncé au survol */
+}
+
+/* Bouton "Cancel" (Annuler) */
+.post-form .cancel-link {
+    text-decoration: none;
+}
+
+.post-form .cancel-link span {
+    background-color: #6c757d; /* Gris */
+    color: #ffffff;
+    display: block; /* Pour que le <span> prenne les styles du bouton */
+}
+
+.post-form .cancel-link span:hover {
+    background-color: #5a6268; /* Gris plus foncé au survol */
+}
+
+/* --- Message d'Erreur --- */
+.post-form .error-message {
+    color: #ff4d4d; /* Rouge */
+    text-align: center;
+    width: 100%; /* Prend toute la largeur du footer */
+    margin-top: 0.5rem;
+}
+body{
+    color: #000000;
+}
+/* --- Adaptation Responsive (Mobile) --- */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .post-form {
+        padding: 1.5rem;
+        /* Empile les colonnes sur mobile */
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "aside"
+            "footer";
+    }
+
+    /* Supprime la bordure latérale et ajoute une bordure supérieure */
+    .post-form aside {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid #444; 
+        padding-top: 1.5rem;
+    }
+}
