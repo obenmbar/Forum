@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create_Poste</title>
+    <link rel="stylesheet" href="../static/post.css">
+</head>
+<body>
+  <form action="/CreatePost" method="POST" class="post-form">
+    <header><h2 class="header">Creat New Post</h2></header>
+        <main class="input">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
+            <section id="title">
+              <label for="Title" class="title">Title:</label>
+              <br>
+              <input type="text" placeholder="title" required id ="Title" name="Title" maxlength="150" class="text" value="{{.Post.Title}}">
+          </section>
+            <section class="contenue">
+              <label for="Contenue"> Contenue:</label>
+              <br>
+              <textarea  id="Contenue" placeholder="Contenue" name="Contenue" maxlength="50000" required class="text" >{{.Post.Contenue}}</textarea>
+            </section>
+        </main>
+        <aside>
+           <p>Category</p>
+            <div class="check-group">
+              <input type="checkbox" value="Sport" name="Category" id="Sport" >
+              <label for="Sport">Sport</label>
+            </div>
+            <div class="check-group">
+              <input type="checkbox" value="Sience" id="Sience" name="Category" >
+              <label for="Sience">Sience</label>
+            </div>
+            <div class="check-group">
+              <input type="checkbox" value="Technologie" id="Technologie" name="Category">
+              <label for="Technologie">Technologie</label>
+            </div>
+            <div class="check-group">
+              <input type="checkbox" value="Culture" id="Culture" name="Category">
+              <label for="Culture">Culture</label>   
+            </div>
+            <div class="check-group">
+              <input type="checkbox" value="Business" id="Business" name="Category" >
+              <label for="Business">Business</label>
+            </div>
+            <div class="check-group">
+              <input type="checkbox" value="Food" id="Food" name="Category">
+              <label for="Food">Food</label>
+            </div>
+            <div class="check-group">
+              <input type="checkbox" value="Other" id="Other" name="Category" checked>
+              <label for="Other">Other</label>
+            </div>
+        </aside>
+     <footer>
+        <a href="/" class="cancel-link"><span>Cancel</span></a>
+        <input type="submit" name="submit" id="submit" value="Publier">
+        
+        {{if .ErrorMessege}}
+            <div class="error-message"> {{.ErrorMessege}}</div>
+        {{end}}
+     </footer>
+  </form>
+</body>
+</html>
