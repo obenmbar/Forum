@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+       display: flex;
+    justify-content:center;
+    align-items: column;
+ 
+    background-color: rgb(226, 214, 238);
+}
+.login{
+    position: absolute; 
+    top: 50%; 
+    left: 50%;
+background-color: aquamarine;
+aspect-ratio: 4/5;
+border-radius: 10px;
+} 
+H1{
+    text-align: center;
+    font-size: clamp(0.8vw,1.5vw,2vw);
+    color: rgb(144, 86, 199);
+    
+}
