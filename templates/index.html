@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AGORA FORUM</title>
+  <link rel="icon" href Daryl="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/statics/index.css">
+</head>
+
+<body>
+
+  <!-- SAME NAVBAR -->
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <img src="/assets/icons/logo.png" alt="AGORA Logo">
+      <span>AGORA FORUM</span>
+    </a>
+
+    <div class="user-menu">
+      <!-- IF USER IS LOGGED IN -->
+      {{if .UserName}}
+      <img src="/assets/icons/userAvatar.png" alt="User Avatar" class="user-avatar">
+      <div class="dropdown">
+         <div class="dropdown-user">{{.UserName}}</div>
+        <form action="/create/post" method="GET">
+          <button type="submit">Create Post</button>
+        </form>
+        <form action="/logout" method="post">
+          <input type="hidden" name="csrf_token" value="{{.Token}}">
+          <button type="submit">Logout</button>
+        </form>
+      </div>
+
+      <!-- IF USER IS NOT LOGGED IN (GUEST) -->
+      {{else}}
+      <img src="/assets/icons/userAvatar.png" alt="Guest" class="user-avatar">
+      <div class="dropdown">
+        <form action="/login" method="GET">
+          <button type="submit">Login</button>
+        </form>
+        <form action="/register" method="GET">
+          <button type="submit">Register</button>
+        </form>
+      </div>
+      {{end}}
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="container">
+
+      <!-- TITLE + TABS (exactly like your screenshot) -->
+      <div class="page-header">
+        <h2 class="page-title">
+          {{if eq .Filter "mine"}}My Posts{{else if eq .Filter "liked"}}Liked Posts{{else}}All Posts{{end}}
+        </h2>
+
+        <div class="view-tabs">
+          <a href="/" class="tab {{if not .Filter}}active{{end}}">All Posts</a>
+          {{if .UserName}}
+          <a href="/?filter=mine" class="tab {{if eq .Filter "mine"}}active{{end}}">My Posts</a>
+          <a href="/?filter=liked" class="tab {{if eq .Filter "liked"}}active{{end}}">Liked Posts</a>
+          {{end}}
+        </div>
+
+        <details class="category-filter">
+          <summary>Categories</summary>
+          <div class="category-panel">
+            <form method="GET" action="/">
+              <div class="categories-checkbox">
+                <label class="checkbox-label"><input type="checkbox" name="category" value="Science">
+                  Science</label>
+                <label class="checkbox-label"><input type="checkbox" name="category"
+                    value="Technology">Technology</label>
+                <label class="checkbox-label"><input type="checkbox" name="category" value="Art">
+                  Art</label>
+                <label class="checkbox-label"><input type="checkbox" name="category" value="Gaming">
+                  Gaming</label>
+                <label class="checkbox-label"><input type="checkbox" name="category" value="Other" checked>Other</label>
+              </div>
+              <div class="form-actions" style="justify-content:flex-end;border:none;padding-top:1rem;">
+                <button type="submit" class="submit-btn">Apply Filters</button>
+              </div>
+            </form>
+          </div>
+        </details>
+      </div>
+
+      <!-- POSTS LIST -->
+      {{if .Posts}}
+      {{range .Posts}}
+      <article class="post-card">
+        <div class="post-header">
+          <img src="/assets/icons/userAvatar.png" alt="Avatar" class="post-avatar">
+          <div class="post-info">
+            <a href="/posts/{{.Id}}" class="post-title-link">{{.Title}}</a>
+            <p class="post-meta">by {{.AuthorName}} • {{.CreationDate}}</p>
+          </div>
+        </div>
+
+        <div class="post-preview">
+          <p>{{.Content}}</p>
+          <a href="/posts/{{.Id}}" class="read-more">Show more</a>
+        </div>
+
+        <div class="post-footer">
+
+          <div class="post-categories">
+            {{range .Categories}}
+            <span class="tag">{{.}}</span>
+            {{end}}
+          </div>
+
+          <!-- FIX: wrap all actions inside ONE flex container -->
+          <div class="post-actions">
+
+            <form action="/reaction/" method="POST" style="display:inline;">
+              <input type="hidden" name="csrf_token" value="{{.Token}}">
+              <input type="hidden" name="id" value="{{.Id}}">
+              <input type="hidden" name="target" value="post">
+              <input type="hidden" name="redirect" value="home">
+
+              <button type="submit" name="type" value="like" class="action-btn {{if eq .Liked 1}}active{{end}}">
+                <img src="/assets/icons/like.png" alt="Like"> {{.Likes}}
+              </button>
+            </form>
+
+            <form action="/reaction/" method="POST" style="display:inline;">
+              <input type="hidden" name="csrf_token" value="{{.Token}}">
+              <input type="hidden" name="id" value="{{.Id}}">
+              <input type="hidden" name="target" value="post">
+              <input type="hidden" name="redirect" value="home">
+
+              <button type="submit" name="type" value="dislike" class="action-btn {{if eq .Liked -1}}active{{end}}">
+                <img src="/assets/icons/dislike.png" alt="Dislike"> {{.Dislikes}}
+              </button>
+            </form>
+
+            <a href="/posts/{{.Id}}" class="comment-btn">
+              <img src="/assets/icons/comment.png" alt="comment icon">
+              {{.CommentNumber}}
+            </a>
+
+          </div>
+
+        </div>
+
+      </article>
+      {{end}}
+
+      {{else}}
+      <!-- EXACT EMPTY STATE FROM YOUR IMAGE -->
+      <div class="empty-state">
+        <h3>No post available</h3>
+        <p>be the first to post</p>
+        {{if .UserName}}
+        <a href="/create/post" class="submit-btn">Create Post</a>
+        {{end}}
+      </div>
+      {{end}}
+
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Error {{.Code}} - AGORA</title>
+  <link rel="stylesheet" href="/statics/error.css">
+</head>
+<body class="error-minimal">
+
+  <div class="error-minimal-container">
+    
+    <!-- RED X ICON FROM PNG -->
+    <img src="/assets/icons/error.png" alt="Error" class="error-x-icon">
+
+    <!-- ERROR CODE + MESSAGE -->
+    <h1 class="error-title">
+      {{.Code}} <span class="error-subtitle">{{.Message}}</span>
+    </h1>
+
+    <!-- PARTHENON BUTTON -->
+    <a href="/" class="btn-parthenon">
+      <img src="/assets/icons/parthenon.png" alt="Home" class="parthenon-icon">
+      Back to Agora
+    </a>
+  </div>
+
+</body>
+</html>
